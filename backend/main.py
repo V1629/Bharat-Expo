@@ -131,7 +131,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:3000"],  # Allow requests from your frontend origin
+    allow_origins=["http://127.0.0.1:3000","*"],  # Allow requests from your frontend origin
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
@@ -143,6 +143,10 @@ class CourseIDRequest(BaseModel):
 
 class SearchRequest(BaseModel):
     query: str
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the Course Recommendation API!"}
 
 @app.post("/recommend/")
 async def recommend_courses_by_id(request: CourseIDRequest):
